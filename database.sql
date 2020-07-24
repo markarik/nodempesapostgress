@@ -7,7 +7,7 @@ CREATE DATABASE mpesa_data;
 CREATE TABLE mobile_payments (  
   transLoID SERIAL PRIMARY KEY,
   TransactionType varchar(30) NOT NULL,
-  TransID varchar(30) NOT NULL,
+  TransID varchar(30) UNIQUE NOT NULL,
   TransTime varchar(14) NOT NULL,
   TransAmount varchar(15) NOT NULL,
   BusinessShortCode varchar(15) NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE mobile_payments (
 CREATE TABLE mobile_payments_confirmation (
   transLoID SERIAL PRIMARY KEY,
   TransactionType varchar(30) NOT NULL,
-  TransID varchar(30) NOT NULL,
+  TransID varchar(30)UNIQUE NOT NULL,
   TransTime varchar(14) NOT NULL,
   TransAmount varchar(15) NOT NULL,
   BusinessShortCode varchar(15) NOT NULL,
