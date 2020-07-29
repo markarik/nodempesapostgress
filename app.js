@@ -28,8 +28,8 @@ app.post("/register", accessToken, (req, resp) => {
       json: {
         ShortCode: "600347",
         ResponseType: "Completetransaction",
-        ConfirmationURL: "https://6fb6fe01e775.ngrok.io/confirmation",
-        ValidationURL: "https://6fb6fe01e775.ngrok.io/validation_url",
+        ConfirmationURL: "https://a302bb57d736.ngrok.io/confirmation",
+        ValidationURL: "https://a302bb57d736.ngrok.io/validation_url",
       },
     },
     function (error, response, body) {
@@ -55,11 +55,11 @@ app.post("/confirmation", (req, res) => {
 
     pool.query(
       "INSERT INTO mobile_payments_confirmation (transID,TransactionType ,TransTime ,TransAmount,BusinessShortCode,BillRefNumber,InvoiceNumber ,OrgAccountBalance ,ThirdPartyTransID,MSISDN ,FirstName,MiddleName,LastName)VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
-     [ author.TransactionType ,author.TransID ,author.TransTime ,author.TransAmount,author.BusinessShortCode,author.BillRefNumber,author.InvoiceNumber ,author.OrgAccountBalance ,author.ThirdPartyTransID,author.MSISDN ,author.FirstName,author.MiddleName,author.LastName],
+     [ author.TransactionType ,author.TransID ,author.TransTime ,author.TransAmount,author.BusinessShortCode,author.BillRefNumber,author.InvoiceNumber ,author.OrgAccountBalance ,author.ThirdPartyTransID,author.MSISDN ,author.FirstName,author.MiddleName,author.LastName] ,
       (err, res) => {
         if (err) throw err;
   
-        // console.log("Last insert ID:", res.transLoID);
+        console.log("Last insert ID:", res.transLoID);
       }
     );
   }catch(err){
@@ -94,7 +94,6 @@ app.post("/validation_url", (req, res) => {
       (err, res) => {
         if (err) throw err;
   
-        // console.log("Last insert ID:", res.transLoID);
       }
     );
   }catch(err){
@@ -104,7 +103,7 @@ app.post("/validation_url", (req, res) => {
   
 });
 
-app.post("/simulate", accessToken, (req, res) => {
+app.get("/simulate", accessToken, (req, res) => {
   let url = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate";
   let auth = "Bearer " + req.access_token;
   request(
@@ -153,8 +152,8 @@ app.get("/balance", accessToken, (req, res) => {
         PartyA: "600347",
         IdentifierType: "4",
         Remarks: "remarks.......",
-        QueueTimeOutURL: "https://6fb6fe01e775.ngrok.io/timeout_url",
-        ResultURL: "https://6fb6fe01e775.ngrok.io/result_url",
+        QueueTimeOutURL: "https://a302bb57d736.ngrok.io/timeout_url",
+        ResultURL: "https://a302bb57d736.ngrok.io/result_url",
       },
     },
 
@@ -177,7 +176,7 @@ app.post("/timeout_url", (req, res) => {
 app.post("/result_url", (req, res) => {
   console.log("Balance Result Response");
 
-  console.log(req.body);
+  console.log(req.body.ResultParameter);
 });
 
 // stk push
@@ -212,7 +211,7 @@ app.post("/stk", accessToken, (req, res) => {
         PartyA: "254724437269",
         PartyB: "174379",
         PhoneNumber: "254724437269",
-        CallBackURL: "https://6fb6fe01e775.ngrok.io/stk_callback",
+        CallBackURL: "https://a302bb57d736.ngrok.io/stk_callback",
         AccountReference: "testapi0347",
         TransactionDesc: "Activate",
       },
@@ -281,8 +280,8 @@ app.get("/b2c", accessToken, (req, res) => {
         PartyA: "600347",
         PartyB: "254708374149",
         Remarks: "Salaried now",
-        QueueTimeOutURL: "https://6fb6fe01e775.ngrok.io/b2c_timeout_url",
-        ResultURL: "https://6fb6fe01e775.ngrok.io/b2c_result_url",
+        QueueTimeOutURL: "https://a302bb57d736.ngrok.io/b2c_timeout_url",
+        ResultURL: "https://a302bb57d736.ngrok.io/b2c_result_url",
         Occasion: "EVE",
       },
     },
