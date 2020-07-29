@@ -10,11 +10,11 @@ app.use(express.urlencoded({ extended: true })); // `true` instead of `false`
 app.use(bodyParser.json());
 
 
-app.get("/token", accessToken, (req, res) => {
+app.get("/token", Token, (req, res) => {
   res.status(200).json({ access_token: req.access_token });
 });
 
-app.post("/register", accessToken, (req, resp) => {
+app.post("/register", Token, (req, resp) => {
   let url = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl";
   let auth = "Bearer " + req.access_token;
 
@@ -28,8 +28,8 @@ app.post("/register", accessToken, (req, resp) => {
       json: {
         ShortCode: "600347",
         ResponseType: "Completetransaction",
-        ConfirmationURL: "https://a302bb57d736.ngrok.io/confirmation",
-        ValidationURL: "https://a302bb57d736.ngrok.io/validation_url",
+        ConfirmationURL: "https://bc2ac892b0b0.ngrok.io/confirmation",
+        ValidationURL: "https://bc2ac892b0b0.ngrok.io/validation_url",
       },
     },
     function (error, response, body) {
@@ -103,7 +103,7 @@ app.post("/validation_url", (req, res) => {
   
 });
 
-app.get("/simulate", accessToken, (req, res) => {
+app.post("/simulate", Token, (req, res) => {
   let url = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate";
   let auth = "Bearer " + req.access_token;
   request(
@@ -134,7 +134,7 @@ app.get("/simulate", accessToken, (req, res) => {
 
 // balance
 
-app.get("/balance", accessToken, (req, res) => {
+app.get("/balance", Token, (req, res) => {
   let url = "https://sandbox.safaricom.co.ke/mpesa/accountbalance/v1/query";
   let auth = "Bearer " + req.access_token;
   request(
@@ -152,8 +152,8 @@ app.get("/balance", accessToken, (req, res) => {
         PartyA: "600347",
         IdentifierType: "4",
         Remarks: "remarks.......",
-        QueueTimeOutURL: "https://a302bb57d736.ngrok.io/timeout_url",
-        ResultURL: "https://a302bb57d736.ngrok.io/result_url",
+        QueueTimeOutURL: "https://bc2ac892b0b0.ngrok.io/timeout_url",
+        ResultURL: "https://bc2ac892b0b0.ngrok.io/result_url",
       },
     },
 
@@ -181,7 +181,7 @@ app.post("/result_url", (req, res) => {
 
 // stk push
 
-app.post("/stk", accessToken, (req, res) => {
+app.post("/stk", Token, (req, res) => {
   let url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
   let auth = "Bearer " + req.access_token;
 
@@ -211,7 +211,7 @@ app.post("/stk", accessToken, (req, res) => {
         PartyA: "254724437269",
         PartyB: "174379",
         PhoneNumber: "254724437269",
-        CallBackURL: "https://a302bb57d736.ngrok.io/stk_callback",
+        CallBackURL: "https://bc2ac892b0b0.ngrok.io/stk_callback",
         AccountReference: "testapi0347",
         TransactionDesc: "Activate",
       },
@@ -233,7 +233,7 @@ app.post("/stk_callback", (req, res) => {
 
 // b2c
 
-app.get("/b2c", accessToken, (req, res) => {
+app.get("/b2c", Token, (req, res) => {
   let url = "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest";
   let auth = "Bearer " + req.access_token;
 
@@ -280,8 +280,8 @@ app.get("/b2c", accessToken, (req, res) => {
         PartyA: "600347",
         PartyB: "254708374149",
         Remarks: "Salaried now",
-        QueueTimeOutURL: "https://a302bb57d736.ngrok.io/b2c_timeout_url",
-        ResultURL: "https://a302bb57d736.ngrok.io/b2c_result_url",
+        QueueTimeOutURL: "https://bc2ac892b0b0.ngrok.io/b2c_timeout_url",
+        ResultURL: "https://bc2ac892b0b0.ngrok.io/b2c_result_url",
         Occasion: "EVE",
       },
     },
@@ -306,7 +306,7 @@ app.post("/b2c_timeout_url", (req, res) => {
   console.log(req.body);
 });
 
-function accessToken(req, resp, next) {
+function Token(req, resp, next) {
   let url =
     "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
   let auth = new Buffer.from(
